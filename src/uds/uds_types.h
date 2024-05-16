@@ -24,7 +24,7 @@ extern "C" {
 // multiframe response. May need to dynamically allocate in the future.
 #define MAX_UDS_RESPONSE_PAYLOAD_LENGTH 127
 #endif
-#define MAX_UDS_REQUEST_PAYLOAD_LENGTH 7
+#define MAX_UDS_REQUEST_PAYLOAD_LENGTH 513
 #define MAX_RESPONDING_ECU_COUNT 8
 #define VIN_LENGTH 17
 
@@ -68,7 +68,7 @@ typedef struct {
     uint16_t pid;
     uint8_t pid_length;
     uint8_t payload[MAX_UDS_REQUEST_PAYLOAD_LENGTH];
-    uint8_t payload_length;
+    uint16_t payload_length;
     bool no_frame_padding;
     DiagnosticRequestType type;
 } DiagnosticRequest;
@@ -88,11 +88,14 @@ typedef enum {
     NRC_SUB_FUNCTION_NOT_SUPPORTED = 0x12,
     NRC_INCORRECT_LENGTH_OR_FORMAT = 0x13,
     NRC_CONDITIONS_NOT_CORRECT = 0x22,
+    NRC_INCORRECT_TRANSFER_INCREMENT = 0x24,
     NRC_REQUEST_OUT_OF_RANGE = 0x31,
     NRC_SECURITY_ACCESS_DENIED = 0x33,
     NRC_INVALID_KEY = 0x35,
     NRC_TOO_MANY_ATTEMPS = 0x36,
     NRC_TIME_DELAY_NOT_EXPIRED = 0x37,
+    NRC_GENERIC_PROGRAMMING_FAILURE = 0x48,
+    NRC_TRANSFER_SUSPENDED = 0x71,
     NRC_RESPONSE_PENDING = 0x78
 } DiagnosticNegativeResponseCode;
 

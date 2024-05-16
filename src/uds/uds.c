@@ -7,11 +7,13 @@
 #include <sys/param.h>
 #include <inttypes.h>
 
-#define ARBITRATION_ID_OFFSET 0x8
+//#define ARBITRATION_ID_OFFSET 0x8
+#define ARBITRATION_ID_OFFSET 0x0
 #define MODE_RESPONSE_OFFSET 0x40
 #define NEGATIVE_RESPONSE_MODE 0x7f
 #define MAX_DIAGNOSTIC_PAYLOAD_SIZE 6
 #define MODE_BYTE_INDEX 0
+//#define PID_BYTE_INDEX 1
 #define PID_BYTE_INDEX 1
 #define NEGATIVE_RESPONSE_MODE_INDEX 1
 #define NEGATIVE_RESPONSE_NRC_INDEX 2
@@ -70,7 +72,7 @@ static uint16_t autoset_pid_length(uint8_t mode, uint16_t pid,
 
 static void send_diagnostic_request(DiagnosticShims* shims,
         DiagnosticRequestHandle* handle) {
-    uint8_t payload[MAX_DIAGNOSTIC_PAYLOAD_SIZE] = {0};
+    uint8_t payload[512] = {0};
     payload[MODE_BYTE_INDEX] = handle->request.mode;
     if(handle->request.has_pid) {
         handle->request.pid_length = autoset_pid_length(handle->request.mode,
@@ -80,9 +82,8 @@ static void send_diagnostic_request(DiagnosticShims* shims,
                 sizeof(payload));
     }
 
-    if(handle->request.payload_length > 0) {
-        memcpy(&payload[PID_BYTE_INDEX + handle->request.pid_length],
-                handle->request.payload, handle->request.payload_length);
+    if(handle->request.payload_length > 0 ) {
+        memcpy(&payload[PID_BYTE_INDEX + handle->request.pid_length], handle->request.payload, handle->request.payload_length);
     }
 
     handle->isotp_send_handle = isotp_send(&handle->isotp_shims,
