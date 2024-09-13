@@ -221,7 +221,7 @@ static bool handle_positive_response(DiagnosticRequestHandle* handle,
             response->completed = true;
 
             uint8_t payload_index = 1 + handle->request.pid_length;
-            response->payload_length = MAX(0, message->size - payload_index);
+            response->payload_length = MAX(0, (int)(message->size - payload_index));
             response->payload_length = MIN(MAX_UDS_RESPONSE_PAYLOAD_LENGTH,
                                            response->payload_length);
             if(response->payload_length > 0) {
