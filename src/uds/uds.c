@@ -72,7 +72,7 @@ static uint16_t autoset_pid_length(uint8_t mode, uint16_t pid,
 
 static void send_diagnostic_request(DiagnosticShims* shims,
         DiagnosticRequestHandle* handle) {
-    uint8_t payload[512] = {0};
+    uint8_t payload[4096] = {0};
     payload[MODE_BYTE_INDEX] = handle->request.mode;
     if(handle->request.has_pid) {
         handle->request.pid_length = autoset_pid_length(handle->request.mode,

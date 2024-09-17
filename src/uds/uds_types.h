@@ -24,7 +24,7 @@ extern "C" {
 // multiframe response. May need to dynamically allocate in the future.
 #define MAX_UDS_RESPONSE_PAYLOAD_LENGTH 127
 #endif
-#define MAX_UDS_REQUEST_PAYLOAD_LENGTH 513
+#define MAX_UDS_REQUEST_PAYLOAD_LENGTH 4096
 #define MAX_RESPONDING_ECU_COUNT 8
 #define VIN_LENGTH 17
 
@@ -96,7 +96,8 @@ typedef enum {
     NRC_TIME_DELAY_NOT_EXPIRED = 0x37,
     NRC_GENERIC_PROGRAMMING_FAILURE = 0x48,
     NRC_TRANSFER_SUSPENDED = 0x71,
-    NRC_RESPONSE_PENDING = 0x78
+    NRC_RESPONSE_PENDING = 0x78,
+    NRC_INVALID_SESSION = 0x7F,
 } DiagnosticNegativeResponseCode;
 
 /* Public: A partially or fully completed response to a diagnostic request.
